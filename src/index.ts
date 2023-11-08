@@ -43,7 +43,7 @@ program
     });
 
 program
-    .command('schedule')
+    .command('Scheduler')
     .description('Starts the scheduler of vacation responder which will run at random intervals (ranging from 45 to 120 seconds)')
     .action(async () => {
         if (!(await isLoggedIn())) {
