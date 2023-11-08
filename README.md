@@ -10,6 +10,7 @@ Pre-requisites:
 
 - Node.js 10+
 - pnpm or yarn or npm
+- **credentials.json file** in project directory. (Download from your google cloud project console. [Learn more](https://developers.google.com/gmail/api/quickstart/nodejs))
 
 Clone this repository
 
