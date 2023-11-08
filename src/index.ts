@@ -11,7 +11,6 @@ program
     .version('1.0.0')
     .description('VacationResponder - An automated email response and thread management tool.');
 
-
 // Define options and commands
 program
     .command('status')
@@ -20,7 +19,7 @@ program
         try {
             if (await isLoggedIn()) {
                 loggedInAccount = await getUserData();
-                console.log(`Logged in with email : ${loggedInAccount?.client_email}`);
+                console.log(`Logged in with email: ${loggedInAccount?.client_email}`);
             } else {
                 console.log('Not logged in. Please run "login" command to log in.');
             }
@@ -47,7 +46,7 @@ program
     .command('schedule')
     .description('Starts the scheduler of vacation responder which will run at random intervals (ranging from 45 to 120 seconds)')
     .action(async () => {
-        if (!await isLoggedIn()) {
+        if (!(await isLoggedIn())) {
             console.log('Not logged in. Please run "login" command to log in to continue.');
             process.exit(0);
         } else {
@@ -60,7 +59,6 @@ program
     .action(() => {
         program.help();
     });
-
 
 // Parse the arguments and display outputs based on commands
 program.parse(process.argv);

@@ -1,6 +1,6 @@
 import { Auth, gmail_v1, google } from 'googleapis';
 
-
+// This function is used to send an automated reply to a message.
 export async function reply(auth: Auth.OAuth2Client, props: {
     messageId: string;
     message: string;
@@ -38,10 +38,11 @@ export async function reply(auth: Auth.OAuth2Client, props: {
         },
     });
 
-    console.log('Automated Reply sent to email from:', from);
+    console.log('Replied and labled an email from:', from);
 }
 
-
+// fetches the list of unread messages from the user's inbox
+// which are unread and not in the 'vacation' label
 export async function getUnreadMessages(auth: Auth.OAuth2Client, after: Date | number = Date.now()) {
     const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1', auth });
 
