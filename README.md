@@ -1,4 +1,24 @@
-# VacationResponder: Automated Email Response and Thread Management
+# VacationResponder
+
+An automated email response and thread management tool.
+
+## Getting Started
+
+```bash
+Usage: pnpm start [command]
+
+VacationResponder - An automated email response and thread management tool.
+
+Options:
+  -V, --version  output the version number
+  -h, --help     display help for command
+
+Commands:
+  status         Outputs the currently logged-in Google account
+  logout         Logs out the current user
+  login          Opens a browser window to OAuth Google account
+  schedule       Starts the task scheduler, executed at random intervals (ranging from 45 to 120 seconds)
+```
 
 ## Description
 
@@ -38,12 +58,9 @@ VacationResponder is an intelligent Node.js-based application designed to ensure
 
 VacationResponder is the go-to solution for professionals seeking a seamless, organized, and automated approach to manage their email correspondence during their absence, providing peace of mind and professionalism in communication.
 
-## Getting Started
+## Prerequisites
 
 This project contains a minimal starter for Node.js project with Typescript, ESLint and Prettier already configured
-
-
-## Prerequisites
 
 - Node.js 10+
 - pnpm or yarn or npm
