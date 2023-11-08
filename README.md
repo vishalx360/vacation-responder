@@ -1,8 +1,8 @@
-# MailAutoResponder: Automated Email Response and Thread Management
+# VacationResponder: Automated Email Response and Thread Management
 
 ## Description
 
-MailAutoResponder is an intelligent Node.js-based application designed to ensure seamless email communication while users are away. Leveraging the power of Google's Gmail API, this tool automatically monitors incoming emails, identifies first-time threads, and sends tailored responses while maintaining the inbox's organization.
+VacationResponder is an intelligent Node.js-based application designed to ensure seamless email communication while users are away. Leveraging the power of Google's Gmail API, this tool automatically monitors incoming emails, identifies first-time threads, and sends tailored responses while maintaining the inbox's organization.
 
 **Key Features:**
 
@@ -36,7 +36,7 @@ MailAutoResponder is an intelligent Node.js-based application designed to ensure
 
 - Code refactoring for improved readability and scalability.
 
-MailAutoResponder is the go-to solution for professionals seeking a seamless, organized, and automated approach to manage their email correspondence during their absence, providing peace of mind and professionalism in communication.
+VacationResponder is the go-to solution for professionals seeking a seamless, organized, and automated approach to manage their email correspondence during their absence, providing peace of mind and professionalism in communication.
 
 ## Getting Started
 
