@@ -15,13 +15,13 @@ Pre-requisites:
 Clone this repository
 
 ```bash
-git clone REPOSITORY_URL
+git clone https://github.com/vishalx360/vacation-responder.git
 ```
 
 Navigate to the project directory.
 
 ```bash
-cd VacationResponder
+cd vacation-responder
 ```
 
 Install dependencies
