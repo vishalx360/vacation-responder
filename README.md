@@ -32,6 +32,12 @@ pnpm install
 
 Note: You can use any package manager such as npm, yarn, or pnpm.
 
+Build application
+
+```bash
+pnpm build
+```
+
 Login to Your Google Account
 
 Execute the following command to open a browser window from where you will give permission to the application to access your gmail account.
