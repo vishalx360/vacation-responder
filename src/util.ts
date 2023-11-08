@@ -9,3 +9,9 @@ export async function fileExists(filePath: string): Promise<boolean> {
         return false;
     }
 }
+
+export async function textToBase64(text: string) {
+    // Convert text to base64
+    const base64String = Buffer.from(text).toString('base64');
+    return base64String;
+}

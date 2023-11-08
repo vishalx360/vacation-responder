@@ -7,7 +7,7 @@ import { fileExists } from './util';
 
 // Define the scopes required for authentication.
 const SCOPES: string[] = [
-    'https://www.googleapis.com/auth/gmail.readonly',
+    'https://www.googleapis.com/auth/gmail.modify',
     'https://www.googleapis.com/auth/userinfo.email'
 ];
 
@@ -160,7 +160,7 @@ async function loadSavedTokenIfExist() {
             const content = await fs.readFile(TOKEN_PATH);
             const token = JSON.parse(content.toString());
             console.log('Currently logged in as:', token.client_email);
-            console.log('if you want to login with a different account, please run logout first.');
+            console.log('if you want to use a different account, please run logout first.');
             return google.auth.fromJSON(token) as Auth.OAuth2Client;
         } else {
             console.log('You are not currently logged in.');

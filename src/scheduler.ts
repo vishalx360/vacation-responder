@@ -14,7 +14,7 @@ export async function schedule(callback: Function) {
         const now = new Date();
         const nextExecutionTime = new Date(now.getTime() + interval).toLocaleTimeString();
 
-        console.log(`Next sequence will be fired at: ${nextExecutionTime}`);
+        console.log(`Next run scheduled at: ${nextExecutionTime}`);
 
         setTimeout(() => schedule(callback), interval);
     }

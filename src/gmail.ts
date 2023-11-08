@@ -1,54 +1,87 @@
 import { Auth, gmail_v1, google } from 'googleapis';
 
-/**
- * Lists the labels in the user's account.
- *
- */
+
+export async function reply(auth: Auth.OAuth2Client, props: {
+    messageId: string;
+    message: string;
+    labelIds?: string[];
+}) {
+    const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1', auth });
+
+    // Get the original message to reply to
+    const originalMessage = await gmail.users.messages.get({
+        userId: 'me',
+        id: props.messageId,
+    });
+
+    // Extract the necessary information for the reply
+    const threadId = originalMessage.data.threadId;
+    const subject = originalMessage.data.payload.headers.find(header => header.name === 'Subject').value;
+
+    // Construct the reply message
+    const from = originalMessage.data.payload.headers.find(header => header.name === 'From').value;
+    const replyMessage = `From: your@email.com\r\nTo: ${from}\r\nIn-Reply-To: ${originalMessage.data.id}\r\nReferences: ${originalMessage.data.id}\r\nSubject: ${subject}\r\n\r\n${props.message}`;
+
+    const encodedMessage = Buffer.from(replyMessage)
+        .toString('base64')
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/, ''); // URL-safe base64
+
+    // Send the reply
+    await gmail.users.messages.send({
+        userId: 'me',
+        requestBody: {
+            raw: encodedMessage,
+            threadId: threadId,
+            labelIds: props.labelIds
+        },
+    });
+
+    console.log('Automated Reply sent to email from:', from);
+}
+
+
+export async function getUnreadMessages(auth: Auth.OAuth2Client, after: Date | number = Date.now()) {
+    const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1', auth });
+
+    const afterTimeInSecond = Math.floor(new Date(after).getTime() / 1000);
+    const queryString = `is:unread -label:vacation -in:chats after:${afterTimeInSecond}`;
+
+    const res = await gmail.users.messages.list({
+        userId: 'me',
+        q: queryString,
+        maxResults: 200
+    });
+    return res.data;
+}
+
 export async function listLabels(auth: Auth.OAuth2Client) {
     const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1', auth });
     const res = await gmail.users.labels.list({
         userId: 'me',
     });
-    const labels = res.data.labels;
-    if (!labels || labels.length === 0) {
-        console.log('No labels found.');
-        return;
+    return res.data;
+}
+
+export async function createLabelIfNotExist(authclient: Auth.OAuth2Client, labelName: string) {
+    const res = await listLabels(authclient);
+    const labels = res.labels?.map((label) => label.name);
+
+    if (!labels?.includes(labelName)) {
+        const labelId = await createLabel(authclient, labelName);
+        console.log(`Created label '${labelName}' with id: ${labelId}`);
+        return labelId;
+    } else {
+        const existingLabel = res.labels?.find((label) => label.name === labelName);
+        if (existingLabel) {
+            console.log(`Label '${labelName}' already exists`);
+            return existingLabel.id;
+        } else {
+            console.log(`Error: Label '${labelName}' was not found in the existing labels`);
+            return null;
+        }
     }
-    console.log('Labels:');
-    labels.forEach((label: any) => {
-        console.log(`- ${label.name}`);
-    });
-}
-
-export async function sendEmail(auth: Auth.OAuth2Client) {
-    const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1', auth });
-    const res = await gmail.users.messages.send({
-        userId: 'me',
-        requestBody: {
-            raw: 'Hello World!',
-        },
-    });
-    console.log(res.data);
-}
-
-export async function getMessages(auth: Auth.OAuth2Client) {
-    const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1', auth });
-    const res = await gmail.users.messages.list({
-        userId: 'me',
-    });
-    console.log(res.data);
-}
-
-export async function sendEmailAndLabel(auth: Auth.OAuth2Client, labelName: string) {
-    const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1', auth });
-    const res = await gmail.users.messages.send({
-        userId: 'me',
-        requestBody: {
-            raw: 'Hello World!',
-            labelIds: [await createLabel(auth, labelName)] // Include the label ID when sending the email
-        },
-    });
-    console.log(res.data);
 }
 
 export async function createLabel(auth: Auth.OAuth2Client, labelName: string) {
@@ -64,7 +97,7 @@ export async function createLabel(auth: Auth.OAuth2Client, labelName: string) {
     return res.data.id;
 }
 
-export async function moveEmailToLabel(auth: Auth.OAuth2Client, messageId: string, labelId: string) {
+export async function addLabelToEmail(auth: Auth.OAuth2Client, messageId: string, labelId: string) {
     const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1', auth });
     const res = await gmail.users.messages.modify({
         userId: 'me',
@@ -73,6 +106,6 @@ export async function moveEmailToLabel(auth: Auth.OAuth2Client, messageId: strin
             addLabelIds: [labelId],
         },
     });
-    console.log(res.data);
+    return res.data;
 }
 

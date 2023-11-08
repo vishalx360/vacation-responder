@@ -50,11 +50,7 @@ VacationResponder is an intelligent Node.js-based application designed to ensure
 
 **Improvement Areas:**
 
-- Optimization for reduced API calls and improved performance.
-
-- Enhanced error handling and logging for better debugging and maintenance.
-
-- Code refactoring for improved readability and scalability.
+- Add Pagination : Currently the program fetches 200 emails max per API call, which is the default value for maxResults. This can be improved by using the nextPageToken and resultSizeEstimate provided by the API call to fetch the next batch of emails.
 
 VacationResponder is the go-to solution for professionals seeking a seamless, organized, and automated approach to manage their email correspondence during their absence, providing peace of mind and professionalism in communication.
 

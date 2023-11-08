@@ -1,8 +1,7 @@
 // Import necessary modules
 import { program } from 'commander';
 import { UserData, getUserData, isLoggedIn, login, logout } from './auth';
-import { schedule } from './scheduler';
-import { Task } from './task';
+import { Main } from './main';
 
 // Simulate the login status, can be replaced with actual logic to check login status
 let loggedInAccount: UserData | null; // To store logged-in account info
@@ -52,7 +51,7 @@ program
             console.log('Not logged in. Please run "login" command to log in to continue.');
             process.exit(0);
         } else {
-            await schedule(Task);
+            await Main();
         }
     });
 
