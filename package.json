@@ -13,6 +13,7 @@
     "lint": "eslint src/**/*.ts --fix"
   },
   "dependencies": {
+    "commander": "^11.1.0",
     "typescript": "^5.2.2",
     "unbuild": "^2.0.0"
   },
