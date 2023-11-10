@@ -1,5 +1,7 @@
 # Vacation-Responder
 
+![System-Arch](/System-Arch.png)
+
 Vacation-Responder is an intelligent Node.js-based command-line application designed to ensure seamless email communication while users are away. Leveraging the power of Google's Gmail API, this tool automatically monitors incoming emails, identifies first-time threads, and sends tailored responses while maintaining the inbox's organization.
 
 A go-to solution for professionals seeking a seamless, organized, and automated approach to manage their email correspondence during their absence, providing peace of mind and professionalism in communication.
@@ -104,14 +106,14 @@ Commands:
 
   - Implements JSON Web Tokens (JWT) for authentication and token-based security.
 
+### Development Dependencies
+
 - **[typescript](https://www.npmjs.com/package/typescript)**
 
   - Typed superset of JavaScript, enhancing code quality with static typing and modern ECMAScript features.
 
 - **[unbuild](https://www.npmjs.com/package/unbuild)**
   - Manages build processes and configurations in projects.
-
-### Development Dependencies
 
 - **[@swc/cli](https://www.npmjs.com/package/@swc/cli)**
 
