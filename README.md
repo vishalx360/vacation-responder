@@ -1,6 +1,7 @@
 # Vacation-Responder
 
-![System-Arch](/System-Arch.png)
+![System Arch Visual Explanation](/System-Arch-Visual-Explanation.gif?raw=true "Taskflow.space")
+<!-- ![System-Arch](/System-Arch.png) -->
 
 Vacation-Responder is an intelligent Node.js-based command-line application designed to ensure seamless email communication while users are away. Leveraging the power of Google's Gmail API, this tool automatically monitors incoming emails, identifies first-time threads, and sends tailored responses while maintaining the inbox's organization.
 
