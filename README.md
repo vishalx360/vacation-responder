@@ -7,6 +7,30 @@ Vacation-Responder is an intelligent Node.js-based command-line application desi
 
 A go-to solution for professionals seeking a seamless, organized, and automated approach to manage their email correspondence during their absence, providing peace of mind and professionalism in communication.
 
+## Low Level Design
+
+![System Arch Visual Explanation](/LLD.png?raw=true "Taskflow.space")
+
+
+## Usage
+
+```bash
+Usage: pnpm start [command]
+
+VacationResponder - An automated email response and thread management tool.
+
+Options:
+  -V, --version  output the version number
+  -h, --help     display help for command
+
+Commands:
+  status         Outputs the currently logged-in Google account
+  logout         Logs out the current user
+  login          Opens a browser window to OAuth Google account
+  scheduler       Starts the task scheduler, executed at random intervals (ranging from 45 to 120 seconds)
+```
+
+
 ## Getting Started (Installation)
 
 Pre-requisites:
@@ -55,24 +79,6 @@ Initiate the scheduler using the following command:
 
 ```bash
 pnpm start scheduler
-```
-
-## Usage
-
-```bash
-Usage: pnpm start [command]
-
-VacationResponder - An automated email response and thread management tool.
-
-Options:
-  -V, --version  output the version number
-  -h, --help     display help for command
-
-Commands:
-  status         Outputs the currently logged-in Google account
-  logout         Logs out the current user
-  login          Opens a browser window to OAuth Google account
-  scheduler       Starts the task scheduler, executed at random intervals (ranging from 45 to 120 seconds)
 ```
 
 ## Improvement Areas
