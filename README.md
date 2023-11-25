@@ -1,8 +1,34 @@
 # Vacation-Responder
 
+![System Arch Visual Explanation](/System-Arch-Visual-Explanation.gif?raw=true 'Vacation-Responder')
+
+<!-- ![System-Arch](/System-Arch.png) -->
+
 Vacation-Responder is an intelligent Node.js-based command-line application designed to ensure seamless email communication while users are away. Leveraging the power of Google's Gmail API, this tool automatically monitors incoming emails, identifies first-time threads, and sends tailored responses while maintaining the inbox's organization.
 
 A go-to solution for professionals seeking a seamless, organized, and automated approach to manage their email correspondence during their absence, providing peace of mind and professionalism in communication.
+
+## Low Level Design
+
+![System Arch Visual Explanation](/LLD.png?raw=true 'System Arch Visual Explanation')
+
+## Usage
+
+```bash
+Usage: pnpm start [command]
+
+VacationResponder - An automated email response and thread management tool.
+
+Options:
+  -V, --version  output the version number
+  -h, --help     display help for command
+
+Commands:
+  status         Outputs the currently logged-in Google account
+  logout         Logs out the current user
+  login          Opens a browser window to OAuth Google account
+  scheduler       Starts the task scheduler, executed at random intervals (ranging from 45 to 120 seconds)
+```
 
 ## Getting Started (Installation)
 
@@ -15,13 +41,13 @@ Pre-requisites:
 Clone this repository
 
 ```bash
-git clone REPOSITORY_URL
+git clone https://github.com/vishalx360/vacation-responder.git
 ```
 
 Navigate to the project directory.
 
 ```bash
-cd VacationResponder
+cd vacation-responder
 ```
 
 Install dependencies
@@ -52,24 +78,6 @@ Initiate the scheduler using the following command:
 
 ```bash
 pnpm start scheduler
-```
-
-## Usage
-
-```bash
-Usage: pnpm start [command]
-
-VacationResponder - An automated email response and thread management tool.
-
-Options:
-  -V, --version  output the version number
-  -h, --help     display help for command
-
-Commands:
-  status         Outputs the currently logged-in Google account
-  logout         Logs out the current user
-  login          Opens a browser window to OAuth Google account
-  scheduler       Starts the task scheduler, executed at random intervals (ranging from 45 to 120 seconds)
 ```
 
 ## Improvement Areas
@@ -104,14 +112,15 @@ Commands:
 
   - Implements JSON Web Tokens (JWT) for authentication and token-based security.
 
+### Development Dependencies
+
 - **[typescript](https://www.npmjs.com/package/typescript)**
 
   - Typed superset of JavaScript, enhancing code quality with static typing and modern ECMAScript features.
 
 - **[unbuild](https://www.npmjs.com/package/unbuild)**
-  - Manages build processes and configurations in projects.
 
-### Development Dependencies
+  - Manages build processes and configurations in projects.
 
 - **[@swc/cli](https://www.npmjs.com/package/@swc/cli)**
 
