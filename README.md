@@ -1,16 +1,16 @@
-# Vacation-Responder
+# Vacation-Responder V2
 
-![System Arch Visual Explanation](/System-Arch-Visual-Explanation.gif?raw=true "Taskflow.space")
+![System Arch Visual Explanation](/System-Arch-Visual-Explanation.gif?raw=true 'System Arch')
+
 <!-- ![System-Arch](/System-Arch.png) -->
 
-Vacation-Responder is an intelligent Node.js-based command-line application designed to ensure seamless email communication while users are away. Leveraging the power of Google's Gmail API, this tool automatically monitors incoming emails, identifies first-time threads, and sends tailored responses while maintaining the inbox's organization.
+Vacation-Responder is an intelligent Node.js-based command-line application designed to ensure seamless email communication while users are away. Leveraging the prowers of [Google's Gmail API](https://developers.google.com/gmail/api/guides) and the advanced [Google Gemini (Pro)](https://deepmind.google/technologies/gemini/) Large Language Model, this tool orchestrates seamless correspondence by actively monitoring incoming emails. With an intuitive approach, it adeptly identifies first-time threads and crafts intelligent responses, or **Smart-replies**, all while preserving the meticulous organization of the inbox.
 
 A go-to solution for professionals seeking a seamless, organized, and automated approach to manage their email correspondence during their absence, providing peace of mind and professionalism in communication.
 
 ## Low Level Design
 
-![System Arch Visual Explanation](/LLD.png?raw=true "Taskflow.space")
-
+![System Arch Visual Explanation](/LLD.png?raw=true 'LLD')
 
 ## Usage
 
@@ -29,7 +29,6 @@ Commands:
   login          Opens a browser window to OAuth Google account
   scheduler       Starts the task scheduler, executed at random intervals (ranging from 45 to 120 seconds)
 ```
-
 
 ## Getting Started (Installation)
 
@@ -97,6 +96,10 @@ pnpm start scheduler
 
 ### Main Dependencies
 
+- **[@google/generative-ai](https://www.npmjs.com/package/@google/generative-ai)**
+
+  - The Google AI JavaScript SDK enables developers to use Google's state-of-the-art generative AI models (like Gemini) to build AI-powered features and applications.
+
 - **[@google-cloud/local-auth](https://www.npmjs.com/package/@google-cloud/local-auth)**
 
   - Provides local authentication with Google Cloud for local services.
@@ -120,6 +123,7 @@ pnpm start scheduler
   - Typed superset of JavaScript, enhancing code quality with static typing and modern ECMAScript features.
 
 - **[unbuild](https://www.npmjs.com/package/unbuild)**
+
   - Manages build processes and configurations in projects.
 
 - **[@swc/cli](https://www.npmjs.com/package/@swc/cli)**
