@@ -50,7 +50,8 @@ program
             console.log('Not logged in. Please run "login" command to log in to continue.');
             process.exit(0);
         } else {
-            await Main();
+            const authclient = await login();
+            await Main(authclient);
         }
     });
 

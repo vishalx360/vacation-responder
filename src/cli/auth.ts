@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import { Auth, google } from 'googleapis';
 import path from 'path';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { fileExists } from './util';
+import { fileExists } from '../shared/util';
 
 const SCOPES: string[] = [
     'https://www.googleapis.com/auth/gmail.modify',

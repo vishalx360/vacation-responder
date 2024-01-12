@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacation Responder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+
+<body class="bg-gray-900 text-white flex flex-col items-center justify-center h-screen">
+    <div class="shadow-xl p-5 px-10 rounded-xl bg-white/10 flex flex-col items-center justify-center ">
+        <h1 class="text-3xl font-bold mb-4">
+            Vacation Responder
+        </h1>
+        <div id="status-container" class="flex flex-col items-center justify-center">
+            <div class="relative  flex-1  cursor-pointer mb-4">
+                <input type="checkbox" class="sr-only peer" id="toggle-switch">
+                <div onclick="toggleResponder()"
+                    class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 peer-disabled:bg-gray-600">
+                </div>
+            </div>
+            <div id="status-text-container" class="text-lg mb-4">
+            </div>
+        </div>
+
+        <div id="user-container" class="mt-4">
+        </div>
+
+        <a href="/login" id="login-container" class="mt-4">
+            <img class="cursor-pointer"
+                src="https://developers.google.com/static/identity/images/branding_guideline_sample_lt_rd_lg.svg" />
+        </a>
+
+        <button id="logout-btn" class="text-red-500 px-4 py-2 rounded mt-4" onclick="logout()">
+            Logout
+        </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const statusContainer = document.getElementById('status-container');
+        const statusTextContainer = document.getElementById('status-text-container');
+        const toggleSwitch = document.getElementById('toggle-switch');
+        const userContainer = document.getElementById('user-container');
+        const loginContainer = document.getElementById('login-container');
+        const logoutBtn = document.getElementById('logout-btn');
+        let status = false;
+
+        const getStatus = async () => {
+            try {
+                const response = await axios.get('/responder/status');
+                return response.data.status;
+            } catch (error) {
+                console.error('Error fetching status:', error);
+                return null;
+            }
+        };
+
+        const getUserProfile = async () => {
+            try {
+                const response = await axios.get('/profile');
+                return response.data;
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+                return null;
+            }
+        };
+
+        const updateStatusUI = async (newStatus) => {
+            if (newStatus === undefined) {
+                status = await getStatus();
+            } else {
+                status = newStatus;
+            }
+            statusTextContainer.textContent = `Status: ${status ? 'Running' : 'Not Running'}`;
+            toggleSwitch.checked = status;
+        };
+
+        const updateUserUI = async () => {
+            const user = await getUserProfile();
+            if (user) {
+                userContainer.innerHTML = `
+                    <p> ${user.email}</p>
+                   `;
+                logoutBtn.style.display = 'block';
+                loginContainer.style.display = 'none';
+                statusContainer.style.display = 'flex';
+            } else {
+                statusContainer.style.display = 'none';
+                userContainer.innerHTML = 'Please <a href="/login"> Login</a> to continue';
+                logoutBtn.style.display = 'none';
+                loginContainer.style.display = 'block';
+            }
+        };
+
+        const updateUI = async () => {
+            await updateStatusUI();
+            await updateUserUI();
+        };
+
+        const toggleResponder = async () => {
+            // Disable toggle switch and buttons during loading
+            toggleSwitch.disabled = true;
+            logoutBtn.disabled = true;
+
+            let newStatus = status
+            if (status) {
+                newStatus = await stopResponder();
+            } else {
+                newStatus = await startResponder();
+            }
+
+            // Enable toggle switch and buttons after the operation is complete
+            toggleSwitch.disabled = false;
+            logoutBtn.disabled = false;
+
+            await updateStatusUI(newStatus);
+        };
+
+        const startResponder = async () => {
+            const response = await axios.post('/responder/start');
+            showToast('Responder Started');
+            return response.data.status;
+        };
+
+        const stopResponder = async () => {
+            const response = await axios.post('/responder/stop');
+            showToast('Responder Stopped');
+            return response.data.status;
+        };
+
+        const showToast = (message) => {
+            Toastify({
+                text: message,
+                duration: 3000,
+                gravity: 'bottom',
+                position: 'right',
+                stopOnFocus: true,
+            }).showToast();
+        };
+
+        const logout = async () => {
+            const response = await axios.get('/logout');
+            showToast('Logged out successfully');
+            await updateUI();
+        };
+
+        document.addEventListener('DOMContentLoaded', updateUI);
+    </script>
+</body>
+
+</html>
