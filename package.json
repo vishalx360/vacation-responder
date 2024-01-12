@@ -28,9 +28,6 @@
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "morgan": "^1.10.0",
-    "passport": "^0.5.3",
-    "passport-google-oauth20": "^2.0.0",
-    "passport-google-oidc": "^0.1.0",
     "redis": "^4.6.12",
     "tsx": "^4.7.0",
     "typescript": "^5.2.2"
