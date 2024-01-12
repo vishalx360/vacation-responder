@@ -1,4 +1,4 @@
-# Vacation-Responder V2
+# Vacation-Responder V2 (Web and Cli Interface)
 
 ![System Arch Visual Explanation](/System-Arch-Visual-Explanation.gif?raw=true 'System Arch')
 
@@ -8,14 +8,14 @@ Vacation-Responder is an intelligent Node.js-based command-line application desi
 
 A go-to solution for professionals seeking a seamless, organized, and automated approach to manage their email correspondence during their absence, providing peace of mind and professionalism in communication.
 
-## Low Level Design
+## Low Level Design (LLD)
 
 ![System Arch Visual Explanation](/LLD.png?raw=true 'LLD')
 
 ## Usage
 
 ```bash
-Usage: pnpm start [command]
+Usage: pnpm run cli [command]
 
 VacationResponder - An automated email response and thread management tool.
 
@@ -28,65 +28,74 @@ Commands:
   logout         Logs out the current user
   login          Opens a browser window to OAuth Google account
   scheduler       Starts the task scheduler, executed at random intervals (ranging from 45 to 120 seconds)
+
 ```
 
-## Getting Started (Installation)
+# Getting Started (Installation)
 
-Pre-requisites:
+## Prerequisites:
 
 - Node.js 10+
 - pnpm or yarn or npm
-- **credentials.json file** in project directory. (Download from your google cloud project console. [Learn more](https://developers.google.com/gmail/api/quickstart/nodejs))
+- **credentials.json file** in the project directory. (Download from your Google Cloud Project console. [Learn more](https://developers.google.com/gmail/api/quickstart/nodejs))
 
-Clone this repository
+## Installation Steps
 
-```bash
-git clone https://github.com/vishalx360/vacation-responder.git
-```
+1. **Clone this repository:**
 
-Navigate to the project directory.
+   ```bash
+   git clone https://github.com/vishalx360/vacation-responder.git
+   ```
 
-```bash
-cd vacation-responder
-```
+2. **Navigate to the project directory:**
 
-Install dependencies
+   ```bash
+   cd vacation-responder
+   ```
 
-```bash
-pnpm install
-```
+3. **Install Dependencies:**
 
-Note: You can use any package manager such as npm, yarn, or pnpm.
+   Choose your preferred package manager (pnpm, yarn, or npm) and run:
 
-Build application
+   ```bash
+   pnpm install
+   ```
 
-```bash
-pnpm build
-```
+   Note: You can use any package manager such as npm, yarn, or pnpm.
 
-Login to Your Google Account
+## CLI and Server Scripts:
 
-Execute the following command to open a browser window from where you will give permission to the application to access your gmail account.
+- **Run CLI:**
 
-```bash
-pnpm start login
-```
+  ```bash
+  pnpm run cli [command]
+  ```
 
-Start the Scheduler
+- **Run CLI in Watch Mode:**
 
-Initiate the scheduler using the following command:
+  ```bash
+  pnpm run cli:watch
+  ```
 
-```bash
-pnpm start scheduler
-```
+- **Run Server:**
+
+  ```bash
+  pnpm run server
+  ```
+
+- **Run Server in Watch Mode:**
+
+  ```bash
+  pnpm run server:watch
+  ```
 
 ## Improvement Areas
 
-- **HTML Email Response** : Currently the program sends a plain text email response. This can be improved by sending an HTML email response.
-
 - **Add testing** : Currently the program does not have any tests. This can be improved by adding unit tests and integration tests.
 
-- **Deployment** : Currently this has a CLI interface. This can be improved by deploying this as a web application.
+- **Better Type Definitions** : Currently the program uses the any type in many places. This can be improved by adding better type definitions.
+
+- **HTML Email Response** : Currently the program sends a plain text email response. This can be improved by sending an HTML email response.
 
 - **Add Pagination** : Currently the program fetches 200 emails max per API call. 100 is the default value for maxResults and can be expanded to 500.But This number can be further improved by using the nextPageToken and resultSizeEstimate provided by the API call to fetch the next batch of emails.
 
@@ -116,23 +125,43 @@ pnpm start scheduler
 
   - Implements JSON Web Tokens (JWT) for authentication and token-based security.
 
+- **[ioredis](https://www.npmjs.com/package/ioredis)**
+
+  - A robust Redis client library for Node.js, providing an interface to interact with Redis servers.
+
+- **[express](https://www.npmjs.com/package/express)**
+
+  - A fast, unopinionated, minimalist web framework for Node.js, used to build the server-side application.
+
+- **[express-session](https://www.npmjs.com/package/express-session)**
+
+  - Simple session middleware for Express, used for managing user sessions.
+
+- **[connect-redis](https://www.npmjs.com/package/connect-redis)**
+
+  - Redis session store for Express, enabling session management using Redis.
+
+- **[cookie-session](https://www.npmjs.com/package/cookie-session)**
+
+  - Lightweight cookie-based session middleware for Express, used for managing session data.
+
+- **[dotenv](https://www.npmjs.com/package/dotenv)**
+
+  - A zero-dependency module that loads environment variables from a .env file, enhancing configuration management.
+
+- **[morgan](https://www.npmjs.com/package/morgan)**
+
+  - HTTP request logger middleware for Node.js, providing information about incoming requests.
+
 ### Development Dependencies
 
 - **[typescript](https://www.npmjs.com/package/typescript)**
 
   - Typed superset of JavaScript, enhancing code quality with static typing and modern ECMAScript features.
 
-- **[unbuild](https://www.npmjs.com/package/unbuild)**
+- **[nodemon](https://www.npmjs.com/package/nodemon)**
 
-  - Manages build processes and configurations in projects.
-
-- **[@swc/cli](https://www.npmjs.com/package/@swc/cli)**
-
-  - Super-fast JavaScript to JavaScript compiler that transpiles modern code for different environments.
-
-- **[@swc/core](https://www.npmjs.com/package/@swc/core)**
-
-  - Core functionality of the SWC JavaScript to JavaScript compiler, enabling code transpilation.
+  - Utility monitoring application changes and automatically restarting the server during development.
 
 - **[@types/jsonwebtoken](https://www.npmjs.com/package/@types/jsonwebtoken)**
 
@@ -161,10 +190,6 @@ pnpm start scheduler
 - **[eslint-plugin-prettier](https://www.npmjs.com/package/eslint-plugin-prettier)**
 
   - ESLint plugin enabling code formatting using Prettier.
-
-- **[nodemon](https://www.npmjs.com/package/nodemon)**
-
-  - Utility monitoring application changes and automatically restarting the server.
 
 - **[prettier](https://www.npmjs.com/package/prettier)**
   - Opinionated code formatter ensuring consistent code style across the project.
