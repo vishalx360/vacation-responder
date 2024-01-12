@@ -8,11 +8,19 @@ Vacation-Responder is an intelligent Node.js-based command-line application desi
 
 A go-to solution for professionals seeking a seamless, organized, and automated approach to manage their email correspondence during their absence, providing peace of mind and professionalism in communication.
 
-## Low Level Design (LLD)
+## File Structure Diagram
 
-![System Arch Visual Explanation](/LLD.png?raw=true 'LLD')
+![File Structure Diagram](/LLD.png?raw=true 'LLD')
 
-## Usage
+## Usage : Web Interface
+
+```bash
+Usage: pnpm run server
+```
+
+This will start a server on http://localhost:3000
+
+## Usage : Command Line Interface (CLI)
 
 ```bash
 Usage: pnpm run cli [command]
@@ -31,7 +39,7 @@ Commands:
 
 ```
 
-# Getting Started (Installation)
+## Getting Started (Installation)
 
 ## Prerequisites:
 
