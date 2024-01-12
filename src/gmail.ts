@@ -5,6 +5,7 @@ export async function reply(auth: Auth.OAuth2Client, props: {
     messageId: string;
     message: string;
     labelIds?: string[];
+    historyId: string
 }) {
     const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1', auth });
 
@@ -17,7 +18,7 @@ export async function reply(auth: Auth.OAuth2Client, props: {
     // Extract the necessary information for the reply
     const threadId = originalMessage.data.threadId;
     const subject = originalMessage.data.payload.headers.find(header => header.name === 'Subject').value;
-
+    const historyId = props.historyId;
     // Construct the reply message
     const from = originalMessage.data.payload.headers.find(header => header.name === 'From').value;
     const replyMessage = `From: your@email.com\r\nTo: ${from}\r\nIn-Reply-To: ${originalMessage.data.id}\r\nReferences: ${originalMessage.data.id}\r\nSubject: ${subject}\r\n\r\n${props.message}`;
@@ -34,7 +35,8 @@ export async function reply(auth: Auth.OAuth2Client, props: {
         requestBody: {
             raw: encodedMessage,
             threadId: threadId,
-            labelIds: props.labelIds
+            labelIds: props.labelIds,
+            historyId
         },
     });
 
@@ -52,7 +54,16 @@ export async function getUnreadMessages(auth: Auth.OAuth2Client, after: Date | n
     const res = await gmail.users.messages.list({
         userId: 'me',
         q: queryString,
-        maxResults: 200
+        maxResults: 200,
+    });
+    return res.data;
+}
+
+export async function getMessage(auth: Auth.OAuth2Client, messageId: string) {
+    const gmail: gmail_v1.Gmail = google.gmail({ version: 'v1', auth });
+    const res = await gmail.users.messages.get({
+        userId: 'me',
+        id: messageId,
     });
     return res.data;
 }

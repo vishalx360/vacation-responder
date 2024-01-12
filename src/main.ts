@@ -1,16 +1,15 @@
 import { Auth, gmail_v1 } from "googleapis";
-import { login } from "./auth";
-import { createLabelIfNotExist, getUnreadMessages, addLabelToEmail, reply } from "./gmail";
+import { addLabelToEmail, createLabelIfNotExist, getMessage, getUnreadMessages, reply } from "./gmail";
+import { GenerateSmartReply } from "./llm";
 import { schedule } from "./scheduler";
 
 const MARKER_LABEL = "vacation";
-const AUTOMATED_MESSAGE = `Hey, the recipient is currently on vacation. Once they are back, they will reply to your email. This is an automated reply sent by VacationResponder.`;
+const DEFAULT_AUTOMATED_MESSAGE = `Hey, the recipient is currently on vacation. Once they are back, they will reply to your email. This is an automated reply sent by VacationResponder.`;
 
 let lastExecutedAt = Date.now();
 let MARKER_LABEL_ID = "";
 
-export async function Main() {
-    const authclient = await login();
+export async function Main(authclient: Auth.OAuth2Client) {
     MARKER_LABEL_ID = await createLabelIfNotExist(authclient, MARKER_LABEL);
 
     await schedule(async () => {
@@ -41,12 +40,14 @@ async function processMessagesConcurrently(authclient: Auth.OAuth2Client, messag
         const batchPromises = [];
 
         for (const message of batch) {
+            const snippet = (await getMessage(authclient, message.id)).snippet;
             batchPromises.push(addLabelToEmail(authclient, message.id, MARKER_LABEL_ID));
             batchPromises.push(
                 reply(authclient, {
-                    message: AUTOMATED_MESSAGE,
+                    message: snippet && await GenerateSmartReply(snippet) || DEFAULT_AUTOMATED_MESSAGE,
                     messageId: message.id,
-                    labelIds: [MARKER_LABEL_ID]
+                    labelIds: [MARKER_LABEL_ID],
+                    historyId: message.historyId,
                 })
             );
         }
